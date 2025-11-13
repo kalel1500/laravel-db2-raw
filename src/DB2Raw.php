@@ -4,47 +4,46 @@ declare(strict_types=1);
 
 namespace Thehouseofel\DB2Raw;
 
+use Thehouseofel\DB2Raw\Drivers\Contracts\DB2RawDriver;
+
 class DB2Raw
 {
-    private string $connection_string;
-
-    public function __construct()
+    public function __construct(
+        protected DB2RawDriver $driver,
+        protected DB2RawConfig $config,
+    )
     {
-        $hostname = config('db2_raw.host');
-        $port     = config('db2_raw.port');
-        $database = config('db2_raw.database');
-        $user     = config('db2_raw.username');
-        $password = config('db2_raw.password');
-
-        $this->connection_string = "DRIVER={IBM DB2 ODBC DRIVER};DATABASE=$database;HOSTNAME=$hostname;PORT=$port;PROTOCOL=TCPIP;UID=$user;PWD=$password;";
     }
 
     protected function startConnection()
     {
-        return db2_connect($this->connection_string, '', '');
+        $conn = $this->driver->connect($this->config->toConnectionString());
+        if (! $conn) {
+            throw new \RuntimeException('Failed to connect to DB2');
+        }
+        return $conn;
     }
 
     protected function closeConnection($connection): void
     {
-        db2_close($connection);
+        $this->driver->close($connection);
     }
 
     public function exec(string $query, array $fields): array
     {
-        $connection = $this->startConnection();
-        $result     = db2_exec($connection, $query);
-        $data       = [];
+        $conn   = $this->startConnection();
+        $result = $this->driver->exec($conn, $query);
+        $data   = [];
 
-        while ($row = db2_fetch_assoc($result)) {
+        while ($row = $this->driver->fetchAssoc($result)) {
             $rowData = [];
             foreach ($fields as $field) {
-                $rowData[$field] = $row[$field];
+                $rowData[$field] = $row[$field] ?? null;
             }
             $data[] = $rowData;
         }
 
-        $this->closeConnection($connection);
-
+        $this->closeConnection($conn);
         return $data;
     }
 }
