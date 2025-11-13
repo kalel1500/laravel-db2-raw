@@ -9,7 +9,7 @@ use Illuminate\Support\ServiceProvider;
 class DB2RawServiceProvider extends ServiceProvider
 {
     public array $singletons = [
-        'thehouseofel.kalion.redirectAfterLogin'  => DB2Raw::class,
+        'thehouseofel.db2raw.db2raw' => DB2Raw::class
     ];
 
     public function register(): void
