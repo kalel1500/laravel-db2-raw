@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         cacheDirectory=".phpunit.cache"
+         executionOrder="depends,defects"
+         stopOnFailure="false"
+         failOnWarning="true"
+         failOnRisky="true"
+         beStrictAboutOutputDuringTests="true">
+
+    <testsuites>
+        <testsuite name="Package Test Suite">
+            <directory>./tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <source>
+        <include>
+            <directory>./src</directory>
+        </include>
+    </source>
+
+    <php>
+        <!-- Forzamos el entorno de testing -->
+        <env name="APP_ENV" value="testing"/>
+        <env name="DB_CONNECTION" value="db2"/>
+        <env name="DB2_HOST" value="fake-host"/>
+        <env name="DB2_PORT" value="50000"/>
+        <env name="DB2_DATABASE" value="fake-db"/>
+        <env name="DB2_USERNAME" value="fake-user"/>
+        <env name="DB2_PASSWORD" value="fake-pass"/>
+    </php>
+</phpunit>
