@@ -22,14 +22,27 @@ class DB2RawConfig
     }
 
     /** Crea desde la configuración Laravel */
-    public static function fromLaravelConfig(): self
+    public static function fromLaravelConfig($connection): self
+    {
+        $connection = config('db2_raw.connections.' . $connection, []);
+        return new self(
+            $connection['host'] ?? '',
+            $connection['port'] ?? '',
+            $connection['database'] ?? '',
+            $connection['username'] ?? '',
+            $connection['password'] ?? '',
+        );
+    }
+
+    /** Crea desde la configuración Laravel */
+    public static function empty(): self
     {
         return new self(
-            config('db2_raw.host', ''),
-            config('db2_raw.port', ''),
-            config('db2_raw.database', ''),
-            config('db2_raw.username', ''),
-            config('db2_raw.password', ''),
+            '',
+            '',
+            '',
+            '',
+            '',
         );
     }
 }

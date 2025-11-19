@@ -8,11 +8,19 @@ use Thehouseofel\DB2Raw\Drivers\Contracts\DB2RawDriver;
 
 class DB2Raw
 {
-    public function __construct(
-        protected DB2RawDriver $driver,
-        protected DB2RawConfig $config,
-    )
+    protected DB2RawConfig $config;
+    protected ?string $connection = null;
+
+    public function __construct(protected DB2RawDriver $driver)
     {
+        $conf = app()->bound('config');
+        $this->config = $conf ? DB2RawConfig::fromLaravelConfig($connection) : DB2RawConfig::empty();
+    }
+
+    public function connection($name): DB2Raw
+    {
+        $this->connection = $name;
+        return $this;
     }
 
     protected function startConnection()

@@ -41,4 +41,11 @@ class DB2RawTest extends TestCase
         $result = $db2->exec('SELECT * FROM EMPTY', ['ID']);
         $this->assertSame([], $result);
     }
+
+    public function test_conf()
+    {
+        $db2 = new DB2Raw(new FakeDB2RawDriver([]));
+        $dd = $db2->exec('SELECT * FROM USERS', ['ID', 'NAME']);
+        dd($dd);
+    }
 }
