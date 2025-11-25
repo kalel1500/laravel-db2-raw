@@ -11,15 +11,13 @@ use Thehouseofel\DB2Raw\Drivers\Contracts\Db2Driver;
  */
 class Db2Manager
 {
-    protected array $config;
-    protected Db2Driver $driver;
     protected array $connections = [];
 
-    public function __construct(array $config, Db2Driver $driver)
+    public function __construct(
+        protected array $config, // $config esperado: ['default' => 'main', 'connections' => [ 'main' => [...], ... ]]
+        protected Db2Driver $driver,
+    )
     {
-        // $config esperado: ['default' => 'main', 'connections' => [ 'main' => [...], ... ]]
-        $this->config = $config;
-        $this->driver = $driver;
     }
 
     /**
