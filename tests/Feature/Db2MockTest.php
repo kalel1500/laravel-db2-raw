@@ -9,7 +9,7 @@ use Thehouseofel\DB2Raw\Db2Config;
 use Thehouseofel\DB2Raw\Drivers\Contracts\Db2Driver;
 use Thehouseofel\DB2Raw\Tests\TestCase;
 
-class Db2Test extends TestCase
+class Db2MockTest extends TestCase
 {
     public function test_exec_calls_driver_methods()
     {
@@ -30,7 +30,7 @@ class Db2Test extends TestCase
         $config = new Db2Config('h', 'p', 'd', 'u', 'pw');
 
         // 4️⃣ Instanciamos Db2 con el mock
-        $db2 = new Db2Connection($driver, $config);
+        $db2 = new Db2Connection($config, $driver);
 
         // 5️⃣ Ejecutamos la consulta
         $out = $db2->exec('q', ['ID', 'NAME']);
@@ -55,7 +55,7 @@ class Db2Test extends TestCase
         $config = new Db2Config('h', 'p', 'd', 'u', 'pw');
 
         // 3️⃣ Instancia de Db2
-        $db2 = new Db2Connection($driver, $config);
+        $db2 = new Db2Connection($config, $driver);
 
         // 4️⃣ Esperamos excepción
         $this->expectException(\RuntimeException::class);

@@ -16,10 +16,7 @@ class Db2FacadeTest extends TestCase
         // Usando la Facade: connection('db2Users')->exec(...)
         $result = Db2Facade::connection('db2Users')->exec('SELECT * FROM users', ['ID','NAME']);
 
-        $this->assertEquals([
-            ['ID' => 5, 'NAME' => 'Alice'],
-            ['ID' => 6, 'NAME' => 'Bob'],
-        ], $result);
+        $this->assertEquals(static::getFakeDriverData(), $result);
     }
 
     #[Test]
@@ -28,9 +25,6 @@ class Db2FacadeTest extends TestCase
         // default en getEnvironmentSetUp es db2Users, así que Db2::exec() por defecto funciona
         $result = Db2Facade::exec('SELECT * FROM users', ['ID','NAME']);
 
-        $this->assertEquals([
-            ['ID' => 5, 'NAME' => 'Alice'],
-            ['ID' => 6, 'NAME' => 'Bob'],
-        ], $result);
+        $this->assertEquals(static::getFakeDriverData(), $result);
     }
 }

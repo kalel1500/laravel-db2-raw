@@ -9,18 +9,14 @@ use Thehouseofel\DB2Raw\Drivers\Contracts\Db2Driver;
 
 final class FakeDb2Driver implements Db2Driver
 {
+    protected int   $index     = 0;
     protected array $rows;
-    protected int $index = 0;
-    public array $queries = [];
-
-    public function __construct(array $rows = [])
-    {
-        $this->rows = $rows;
-    }
+    public array    $queries   = [];
+    public bool     $connected = true;
 
     public function connect(Db2Config $config)
     {
-        return 'fake_connection';
+        return $this->connected ? 'fake_conn' : false;
     }
 
     public function exec($connection, string $query)
@@ -42,14 +38,10 @@ final class FakeDb2Driver implements Db2Driver
     }
 
     // Helpers para tests
-    public function setRows(array $rows): void
+    public function setRows(array $rows): static
     {
-        $this->rows = $rows;
+        $this->rows  = $rows;
         $this->index = 0;
-    }
-
-    public function getQueries(): array
-    {
-        return $this->queries;
+        return $this;
     }
 }

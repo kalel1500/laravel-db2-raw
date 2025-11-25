@@ -22,9 +22,9 @@ class TestCase extends Orchestra
     {
         // Configuración de conexión ficticia para testing
         $app['config']->set('db2_raw', [
-            'default' => 'db2Users',
+            'default' => 'main',
             'connections' => [
-                'db2Main' => [
+                'main' => [
                     'host' => 'fake-host',
                     'port' => '50000',
                     'database' => 'fake-db',
@@ -48,10 +48,19 @@ class TestCase extends Orchestra
 
         // Bindear el FakeDriver en vez del RealDriver
         $this->app->bind(Db2Driver::class, function() {
-            return new FakeDb2Driver([
-                ['ID' => 5, 'NAME' => 'Alice'],
-                ['ID' => 6, 'NAME' => 'Bob'],
-            ]);
+            $driver = new FakeDb2Driver();
+            $driver->setRows(static::getFakeDriverData());
+            return $driver;
         });
     }
+
+
+    protected static function getFakeDriverData(): array
+    {
+        return [
+            ['ID' => 5, 'NAME' => 'Alice'],
+            ['ID' => 6, 'NAME' => 'Bob'],
+        ];
+    }
+
 }

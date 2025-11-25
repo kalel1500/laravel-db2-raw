@@ -11,17 +11,15 @@ use Thehouseofel\DB2Raw\Drivers\Contracts\Db2Driver;
  */
 class Db2Manager
 {
-    protected array $connections = [];
-    protected array $configConnections = [];
+    protected array $config;
     protected Db2Driver $driver;
-    protected string $default;
+    protected array $connections = [];
 
     public function __construct(array $config, Db2Driver $driver)
     {
-        // $config esperado: ['default' => 'db2Main', 'connections' => [ 'db2Main' => [...], ... ]]
-        $this->configConnections = $config['connections'] ?? [];
+        // $config esperado: ['default' => 'main', 'connections' => [ 'main' => [...], ... ]]
+        $this->config = $config;
         $this->driver = $driver;
-        $this->default = $config['default'] ?? array_key_first($this->configConnections) ?? null;
     }
 
     /**
@@ -29,19 +27,19 @@ class Db2Manager
      */
     public function connection(?string $name = null): Db2Connection
     {
-        $name = $name ?? $this->default;
+        $name = $name ?? ($this->config['default'] ?? null);
 
         if (!$name) {
-            throw new \InvalidArgumentException('No default DB2 connection configured.');
+            throw new \InvalidArgumentException("No default DB2 connection is configured.");
         }
 
-        if (!isset($this->configConnections[$name])) {
+        if (!isset($this->config['connections'][$name])) {
             throw new \InvalidArgumentException("DB2 connection [$name] does not exist.");
         }
 
         if (!isset($this->connections[$name])) {
-            $cfg = new Db2Config($this->configConnections[$name]);
-            $this->connections[$name] = new Db2Connection($this->driver, $cfg);
+            $db2Config = Db2Config::fromArray($this->config['connections'][$name]);
+            $this->connections[$name] = new Db2Connection($db2Config, $this->driver);
         }
 
         return $this->connections[$name];

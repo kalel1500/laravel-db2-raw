@@ -11,22 +11,24 @@ use Thehouseofel\DB2Raw\Drivers\FakeDb2Driver;
 
 class Db2Test extends TestCase
 {
-    public function test_exec_returns_expected_data()
+    public function test_exec_returns_clean_fields()
     {
-        $driver = new FakeDb2Driver([
+        $driver = new FakeDb2Driver();
+        $driver->setRows([
             ['ID' => 1, 'NAME' => 'John Doe'],
             ['ID' => 2, 'NAME' => 'Jane Smith'],
         ]);
-        $config = new Db2Config('host', '50000', 'db', 'user', 'pass');
 
-        $db2 = new Db2Connection($driver, $config);
+        $config = new Db2Config('h', 'p', 'db', 'u', 'pw');
+        $conn   = new Db2Connection($config, $driver);
 
-        $result = $db2->exec('SELECT * FROM USERS', ['ID', 'NAME']);
+        $out = $conn->exec("SELECT * FROM USERS", ['ID', 'NAME']);
 
+        $this->assertCount(2, $out);
         $this->assertEquals([
             ['ID' => 1, 'NAME' => 'John Doe'],
             ['ID' => 2, 'NAME' => 'Jane Smith'],
-        ], $result);
+        ], $out);
 
         // opcional: comprobar que exec fue llamado con la query
         $this->assertSame(['SELECT * FROM USERS'], $driver->queries);
@@ -34,11 +36,23 @@ class Db2Test extends TestCase
 
     public function test_exec_handles_empty_result()
     {
-        $driver = new FakeDb2Driver([]);
-        $config = new Db2Config('host', '50000', 'db', 'user', 'pass');
-        $db2 = new Db2Connection($driver, $config);
+        $driver = new FakeDb2Driver();
+        $config = new Db2Config('h', 'p', 'db', 'u', 'pw');
+        $db2 = new Db2Connection($config, $driver);
 
         $result = $db2->exec('SELECT * FROM EMPTY', ['ID']);
         $this->assertSame([], $result);
+    }
+
+    public function test_exec_throws_on_failed_connection()
+    {
+        $driver = new FakeDb2Driver();
+        $driver->connected = false;
+
+        $config = new Db2Config('h','p','db','u','pw');
+        $conn   = new Db2Connection($config, $driver);
+
+        $this->expectException(\RuntimeException::class);
+        $conn->exec('SELECT 1', []);
     }
 }

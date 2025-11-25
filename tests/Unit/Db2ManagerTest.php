@@ -14,9 +14,9 @@ class Db2ManagerTest extends TestCase
     public function test_connection_returns_db2_instance_for_named_connection()
     {
         $config = [
-            'default' => 'db2Main',
+            'default' => 'main',
             'connections' => [
-                'db2Main' => [
+                'main' => [
                     'host' => 'h1', 'port'=>'50000','database'=>'db1','username'=>'u','password'=>'p'
                 ],
                 'db2Users' => [
@@ -25,7 +25,7 @@ class Db2ManagerTest extends TestCase
             ],
         ];
 
-        $fakeDriver = new FakeDb2Driver([ ['ID'=>1,'NAME'=>'X'] ]);
+        $fakeDriver = new FakeDb2Driver();
         $manager = new Db2Manager($config, $fakeDriver);
 
         $db = $manager->connection('db2Users');
@@ -42,18 +42,50 @@ class Db2ManagerTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         $config = [
-            'default' => 'db2Main',
+            'default' => 'main',
             'connections' => [
-                'db2Main' => [
+                'main' => [
                     'host' => 'h1', 'port'=>'50000','database'=>'db1','username'=>'u','password'=>'p'
                 ],
             ],
         ];
 
-        $fakeDriver = new FakeDb2Driver([]);
+        $fakeDriver = new FakeDb2Driver();
         $manager = new Db2Manager($config, $fakeDriver);
 
         // nombre erróneo -> excepción
         $manager->connection('no-existe');
+    }
+
+    public function test_returns_connection()
+    {
+        $config = [
+            'default' => 'main',
+            'connections' => [
+                'main' => [
+                    'host' => 'h', 'port' => 'p',
+                    'database' => 'd', 'username' => 'u', 'password' => 'pw'
+                ]
+            ]
+        ];
+
+        $manager = new Db2Manager($config, new FakeDb2Driver());
+
+        $connection = $manager->connection();
+
+        $this->assertInstanceOf(Db2Connection::class, $connection);
+    }
+
+    public function test_throws_on_invalid_connection()
+    {
+        $config = [
+            'default' => 'nope',
+            'connections' => []
+        ];
+
+        $manager = new Db2Manager($config, new FakeDb2Driver());
+
+        $this->expectException(\InvalidArgumentException::class);
+        $manager->connection();
     }
 }
