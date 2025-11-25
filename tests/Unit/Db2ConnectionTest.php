@@ -9,7 +9,7 @@ use Thehouseofel\DB2Raw\Db2Connection;
 use Thehouseofel\DB2Raw\Db2Config;
 use Thehouseofel\DB2Raw\Drivers\FakeDb2Driver;
 
-class Db2Test extends TestCase
+class Db2ConnectionTest extends TestCase
 {
     public function test_exec_returns_clean_fields()
     {
