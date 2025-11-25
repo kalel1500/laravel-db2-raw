@@ -7,7 +7,7 @@ namespace Thehouseofel\DB2Raw;
 use Thehouseofel\DB2Raw\Drivers\Contracts\Db2Driver;
 
 /**
- * @mixin \Thehouseofel\DB2Raw\Db2
+ * @mixin \Thehouseofel\DB2Raw\Db2Connection
  */
 class Db2Manager
 {
@@ -27,7 +27,7 @@ class Db2Manager
     /**
      * Devuelve la instancia Db2 para la conexión dada (o la por defecto).
      */
-    public function connection(?string $name = null): Db2
+    public function connection(?string $name = null): Db2Connection
     {
         $name = $name ?? $this->default;
 
@@ -41,7 +41,7 @@ class Db2Manager
 
         if (!isset($this->connections[$name])) {
             $cfg = new Db2Config($this->configConnections[$name]);
-            $this->connections[$name] = new Db2($this->driver, $cfg);
+            $this->connections[$name] = new Db2Connection($this->driver, $cfg);
         }
 
         return $this->connections[$name];

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Thehouseofel\DB2Raw\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use Thehouseofel\DB2Raw\Db2;
+use Thehouseofel\DB2Raw\Db2Connection;
 use Thehouseofel\DB2Raw\Db2Manager;
 use Thehouseofel\DB2Raw\Drivers\FakeDb2Driver;
 
@@ -30,7 +30,7 @@ class Db2ManagerTest extends TestCase
 
         $db = $manager->connection('db2Users');
 
-        $this->assertInstanceOf(Db2::class, $db);
+        $this->assertInstanceOf(Db2Connection::class, $db);
 
         // verificar caching: segunda llamada devuelve misma instancia
         $db2 = $manager->connection('db2Users');

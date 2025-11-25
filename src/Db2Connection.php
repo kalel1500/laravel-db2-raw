@@ -6,7 +6,7 @@ namespace Thehouseofel\DB2Raw;
 
 use Thehouseofel\DB2Raw\Drivers\Contracts\Db2Driver;
 
-class Db2
+class Db2Connection
 {
     public function __construct(
         protected Db2Driver $driver,

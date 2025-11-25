@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Facade;
 use Thehouseofel\DB2Raw\Db2Manager;
 
 /**
- * @method static \Thehouseofel\DB2Raw\Db2 connection(string $name)
+ * @method static \Thehouseofel\DB2Raw\Db2Connection connection(string $name)
  * @method static array exec(string $query, array $fields)
  *
  * @see \Thehouseofel\DB2Raw\Db2Manager

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Thehouseofel\DB2Raw\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use Thehouseofel\DB2Raw\Db2;
+use Thehouseofel\DB2Raw\Db2Connection;
 use Thehouseofel\DB2Raw\Db2Config;
 use Thehouseofel\DB2Raw\Drivers\FakeDb2Driver;
 
@@ -19,7 +19,7 @@ class Db2Test extends TestCase
         ]);
         $config = new Db2Config('host', '50000', 'db', 'user', 'pass');
 
-        $db2 = new Db2($driver, $config);
+        $db2 = new Db2Connection($driver, $config);
 
         $result = $db2->exec('SELECT * FROM USERS', ['ID', 'NAME']);
 
@@ -36,7 +36,7 @@ class Db2Test extends TestCase
     {
         $driver = new FakeDb2Driver([]);
         $config = new Db2Config('host', '50000', 'db', 'user', 'pass');
-        $db2 = new Db2($driver, $config);
+        $db2 = new Db2Connection($driver, $config);
 
         $result = $db2->exec('SELECT * FROM EMPTY', ['ID']);
         $this->assertSame([], $result);
