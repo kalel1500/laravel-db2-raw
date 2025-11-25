@@ -30,7 +30,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Thehouseofel\\DB2Raw\\DB2RawServiceProvider"
+                "Thehouseofel\\DB2Raw\\Db2ServiceProvider"
             ]
         }
     },

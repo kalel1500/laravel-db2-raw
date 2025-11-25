@@ -54,12 +54,12 @@ php artisan vendor:publish --tag="db2raw"
 
 ## Usage
 
-To launch a query you can use the DB2Raw facade:
+To launch a query you can use the Db2 facade:
 
 ```php
-use Thehouseofel\DB2Raw\Facades\DB2Raw;
+use Thehouseofel\DB2Raw\Facades\Db2;
 
-DB2Raw::exec($query, $fields)
+Db2::exec($query, $fields)
 ```
 
 ## License

@@ -2,7 +2,7 @@
 
 namespace Thehouseofel\DB2Raw\Drivers\Contracts;
 
-interface DB2RawDriver
+interface Db2Driver
 {
     /** Conectar -> devuelve un "resource" / handle */
     public function connect(string $connectionString);

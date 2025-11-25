@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Thehouseofel\DB2Raw\Drivers;
 
-use Thehouseofel\DB2Raw\Drivers\Contracts\DB2RawDriver;
+use Thehouseofel\DB2Raw\Drivers\Contracts\Db2Driver;
 
-final class FakeDB2RawDriver implements DB2RawDriver
+final class FakeDb2Driver implements Db2Driver
 {
     protected array $rows;
     protected int $index = 0;

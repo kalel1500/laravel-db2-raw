@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Thehouseofel\DB2Raw;
 
-use Thehouseofel\DB2Raw\Drivers\Contracts\DB2RawDriver;
+use Thehouseofel\DB2Raw\Drivers\Contracts\Db2Driver;
 
-class DB2Raw
+class Db2
 {
     public function __construct(
-        protected DB2RawDriver $driver,
-        protected DB2RawConfig $config,
+        protected Db2Driver $driver,
+        protected Db2Config $config,
     )
     {
     }

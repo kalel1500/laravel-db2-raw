@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Thehouseofel\DB2Raw;
 
-class DB2RawConfig
+class Db2Config
 {
     public function __construct(
         public string $host,

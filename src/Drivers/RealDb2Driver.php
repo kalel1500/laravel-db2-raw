@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Thehouseofel\DB2Raw\Drivers;
 
-use Thehouseofel\DB2Raw\Drivers\Contracts\DB2RawDriver;
+use Thehouseofel\DB2Raw\Drivers\Contracts\Db2Driver;
 
-final class RealDB2RawDriver implements DB2RawDriver
+final class RealDb2Driver implements Db2Driver
 {
     public function connect(string $connectionString)
     {

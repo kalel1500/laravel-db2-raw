@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Thehouseofel\DB2Raw\Tests\Feature;
 
-use Thehouseofel\DB2Raw\DB2Raw;
-use Thehouseofel\DB2Raw\DB2RawConfig;
-use Thehouseofel\DB2Raw\Drivers\Contracts\DB2RawDriver;
-use Thehouseofel\DB2Raw\Facades\DB2Raw as DB2RawFacade;
+use Thehouseofel\DB2Raw\Db2;
+use Thehouseofel\DB2Raw\Db2Config;
+use Thehouseofel\DB2Raw\Drivers\Contracts\Db2Driver;
+use Thehouseofel\DB2Raw\Facades\Db2 as Db2Facade;
 use Thehouseofel\DB2Raw\Tests\TestCase;
 
-class DB2RawTest extends TestCase
+class Db2Test extends TestCase
 {
     public function test_exec_calls_driver_methods()
     {
         // 1️⃣ Creamos un mock del driver
-        $driver = \Mockery::mock(DB2RawDriver::class);
+        $driver = \Mockery::mock(Db2Driver::class);
 
         // 2️⃣ Definimos expectativas de llamada
         $driver->shouldReceive('connect')->once()->andReturn('conn');
@@ -28,10 +28,10 @@ class DB2RawTest extends TestCase
         $driver->shouldReceive('close')->once()->with('conn');
 
         // 3️⃣ Creamos una config dummy
-        $config = new DB2RawConfig('h', 'p', 'd', 'u', 'pw');
+        $config = new Db2Config('h', 'p', 'd', 'u', 'pw');
 
         // 4️⃣ Instanciamos Db2 con el mock
-        $db2 = new DB2Raw($driver, $config);
+        $db2 = new Db2($driver, $config);
 
         // 5️⃣ Ejecutamos la consulta
         $out = $db2->exec('q', ['ID', 'NAME']);
@@ -49,14 +49,14 @@ class DB2RawTest extends TestCase
     public function test_exec_throws_when_cannot_connect()
     {
         // 1️⃣ Mock del driver que simula fallo al conectar
-        $driver = \Mockery::mock(DB2RawDriver::class);
+        $driver = \Mockery::mock(Db2Driver::class);
         $driver->shouldReceive('connect')->once()->andReturn(false);
 
         // 2️⃣ Config dummy
-        $config = new DB2RawConfig('h', 'p', 'd', 'u', 'pw');
+        $config = new Db2Config('h', 'p', 'd', 'u', 'pw');
 
         // 3️⃣ Instancia de Db2
-        $db2 = new DB2Raw($driver, $config);
+        $db2 = new Db2($driver, $config);
 
         // 4️⃣ Esperamos excepción
         $this->expectException(\RuntimeException::class);
@@ -66,7 +66,7 @@ class DB2RawTest extends TestCase
 
     public function test_it_executes_query_through_facade()
     {
-        $result = DB2RawFacade::exec('SELECT * FROM USERS', ['ID', 'NAME']);
+        $result = Db2Facade::exec('SELECT * FROM USERS', ['ID', 'NAME']);
 
         $this->assertEquals([
             ['ID' => 5, 'NAME' => 'Alice'],
@@ -76,8 +76,8 @@ class DB2RawTest extends TestCase
 
     public function test_it_can_resolve_db2_from_container()
     {
-        $instance = $this->app->make(DB2Raw::class);
+        $instance = $this->app->make(Db2::class);
 
-        $this->assertInstanceOf(DB2Raw::class, $instance);
+        $this->assertInstanceOf(Db2::class, $instance);
     }
 }

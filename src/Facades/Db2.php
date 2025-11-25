@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @method static array exec(string $query, array $fields)
  *
- * @see \Thehouseofel\DB2Raw\DB2Raw
+ * @see \Thehouseofel\DB2Raw\Db2
  */
-class DB2Raw extends Facade
+class Db2 extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -20,6 +20,6 @@ class DB2Raw extends Facade
      */
     protected static function getFacadeAccessor(): string
     {
-        return 'thehouseofel.db2raw.db2raw';
+        return 'thehouseofel.db2raw.db2';
     }
 }

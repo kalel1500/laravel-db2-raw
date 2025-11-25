@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace Thehouseofel\DB2Raw\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
-use Thehouseofel\DB2Raw\DB2RawServiceProvider;
-use Thehouseofel\DB2Raw\Drivers\Contracts\DB2RawDriver;
-use Thehouseofel\DB2Raw\Drivers\FakeDB2RawDriver;
+use Thehouseofel\DB2Raw\Db2ServiceProvider;
+use Thehouseofel\DB2Raw\Drivers\Contracts\Db2Driver;
+use Thehouseofel\DB2Raw\Drivers\FakeDb2Driver;
 
 class TestCase extends Orchestra
 {
     protected function getPackageProviders($app)
     {
         return [
-            DB2RawServiceProvider::class,
+            Db2ServiceProvider::class,
         ];
     }
 
@@ -35,8 +35,8 @@ class TestCase extends Orchestra
         parent::setUp();
 
         // Bindear el FakeDriver en vez del RealDriver
-        $this->app->bind(DB2RawDriver::class, function() {
-            return new FakeDB2RawDriver([
+        $this->app->bind(Db2Driver::class, function() {
+            return new FakeDb2Driver([
                 ['ID' => 5, 'NAME' => 'Alice'],
                 ['ID' => 6, 'NAME' => 'Bob'],
             ]);
