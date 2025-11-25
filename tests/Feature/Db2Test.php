@@ -62,11 +62,4 @@ class Db2Test extends TestCase
 
         $db2->exec('SELECT 1', []);
     }
-
-    public function test_it_can_resolve_db2_from_container()
-    {
-        $instance = $this->app->make(Db2::class);
-
-        $this->assertInstanceOf(Db2::class, $instance);
-    }
 }

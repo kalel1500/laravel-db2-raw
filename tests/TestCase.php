@@ -22,11 +22,23 @@ class TestCase extends Orchestra
     {
         // Configuración de conexión ficticia para testing
         $app['config']->set('db2_raw', [
-            'host' => 'fake-host',
-            'port' => '50000',
-            'database' => 'fake-db',
-            'username' => 'fake-user',
-            'password' => 'fake-pass',
+            'default' => 'db2Users',
+            'connections' => [
+                'db2Main' => [
+                    'host' => 'fake-host',
+                    'port' => '50000',
+                    'database' => 'fake-db',
+                    'username' => 'fake-user',
+                    'password' => 'fake-pass',
+                ],
+                'db2Users' => [
+                    'host' => 'fake-host-2',
+                    'port' => '50001',
+                    'database' => 'fake-db-2',
+                    'username' => 'fake-user-2',
+                    'password' => 'fake-pass-2',
+                ]
+            ]
         ]);
     }
 

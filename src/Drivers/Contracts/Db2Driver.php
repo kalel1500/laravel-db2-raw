@@ -2,17 +2,27 @@
 
 namespace Thehouseofel\DB2Raw\Drivers\Contracts;
 
+use Thehouseofel\DB2Raw\Db2Config;
+
 interface Db2Driver
 {
-    /** Conectar -> devuelve un "resource" / handle */
-    public function connect(string $connectionString);
+    /**
+     * Conecta usando la configuración (Devuelve handle / resource / falso).
+     */
+    public function connect(Db2Config $config);
 
-    /** Ejecutar query -> devuelve un "result" handle */
+    /**
+     * Ejecuta query y devuelve un resultado handle.
+     */
     public function exec($connection, string $query);
 
-    /** Devuelve fila asociativa o false */
+    /**
+     * Devuelve la siguiente fila asociativa o false.
+     */
     public function fetchAssoc($result);
 
-    /** Cierra la conexión */
+    /**
+     * Cierra la conexión.
+     */
     public function close($connection): void;
 }

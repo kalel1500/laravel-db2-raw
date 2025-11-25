@@ -8,13 +8,17 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'host' => env('DB2RAW_HOST'),
+    'default' => env('DB2RAW_CONNECTION', 'main'),
 
-    'port' => env('DB2RAW_PORT'),
+    'connections' => [
 
-    'database' => env('DB2RAW_DATABASE'),
+        'main' => [
+            'host' => env('DB2RAW_HOST'),
+            'port' => env('DB2RAW_PORT'),
+            'database' => env('DB2RAW_DATABASE'),
+            'username' => env('DB2RAW_USERNAME'),
+            'password' => env('DB2RAW_PASSWORD'),
+        ]
 
-    'username' => env('DB2RAW_USERNAME'),
-
-    'password' => env('DB2RAW_PASSWORD'),
+    ]
 ];

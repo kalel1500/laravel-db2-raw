@@ -17,9 +17,9 @@ class Db2
 
     protected function startConnection()
     {
-        $conn = $this->driver->connect($this->config->toConnectionString());
-        if (! $conn) {
-            throw new \RuntimeException('Failed to connect to DB2');
+        $conn = $this->driver->connect($this->config);
+        if ($conn === false || $conn === null) {
+            throw new \RuntimeException('Could not connect to DB2');
         }
         return $conn;
     }
@@ -29,12 +29,15 @@ class Db2
         $this->driver->close($connection);
     }
 
+    /**
+     * Ejecuta una query y devuelve array de filas con las keys indicadas en $fields.
+     */
     public function exec(string $query, array $fields): array
     {
-        $conn   = $this->startConnection();
-        $result = $this->driver->exec($conn, $query);
-        $data   = [];
+        $connection = $this->startConnection();
+        $result = $this->driver->exec($connection, $query);
 
+        $data = [];
         while ($row = $this->driver->fetchAssoc($result)) {
             $rowData = [];
             foreach ($fields as $field) {
@@ -43,7 +46,7 @@ class Db2
             $data[] = $rowData;
         }
 
-        $this->closeConnection($conn);
+        $this->closeConnection($connection);
         return $data;
     }
 }

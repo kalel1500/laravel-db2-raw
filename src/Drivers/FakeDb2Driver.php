@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thehouseofel\DB2Raw\Drivers;
 
+use Thehouseofel\DB2Raw\Db2Config;
 use Thehouseofel\DB2Raw\Drivers\Contracts\Db2Driver;
 
 final class FakeDb2Driver implements Db2Driver
@@ -17,7 +18,7 @@ final class FakeDb2Driver implements Db2Driver
         $this->rows = $rows;
     }
 
-    public function connect(string $connectionString)
+    public function connect(Db2Config $config)
     {
         return 'fake_connection';
     }
@@ -38,5 +39,17 @@ final class FakeDb2Driver implements Db2Driver
     public function close($connection): void
     {
         // noop
+    }
+
+    // Helpers para tests
+    public function setRows(array $rows): void
+    {
+        $this->rows = $rows;
+        $this->index = 0;
+    }
+
+    public function getQueries(): array
+    {
+        return $this->queries;
     }
 }

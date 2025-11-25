@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Thehouseofel\DB2Raw\Drivers;
 
+use Thehouseofel\DB2Raw\Db2Config;
 use Thehouseofel\DB2Raw\Drivers\Contracts\Db2Driver;
 
 final class RealDb2Driver implements Db2Driver
 {
-    public function connect(string $connectionString)
+    public function connect(Db2Config $config)
     {
-        return \db2_connect($connectionString, '', '');
+        // usa el connection string generado por Db2Config
+        return \db2_connect($config->toConnectionString(), '', '');
     }
 
     public function exec($connection, string $query)
