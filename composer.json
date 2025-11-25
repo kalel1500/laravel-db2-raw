@@ -11,6 +11,7 @@
     "license": "GPL-3.0-or-later",
     "require": {
         "ext-json": "*",
+        "ext-ibm_db2": "*",
         "php" : "^8.2"
     },
     "require-dev": {
