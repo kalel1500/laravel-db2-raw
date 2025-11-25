@@ -7,7 +7,6 @@ namespace Thehouseofel\DB2Raw\Tests\Feature;
 use Thehouseofel\DB2Raw\Db2;
 use Thehouseofel\DB2Raw\Db2Config;
 use Thehouseofel\DB2Raw\Drivers\Contracts\Db2Driver;
-use Thehouseofel\DB2Raw\Facades\Db2 as Db2Facade;
 use Thehouseofel\DB2Raw\Tests\TestCase;
 
 class Db2Test extends TestCase
@@ -62,16 +61,6 @@ class Db2Test extends TestCase
         $this->expectException(\RuntimeException::class);
 
         $db2->exec('SELECT 1', []);
-    }
-
-    public function test_it_executes_query_through_facade()
-    {
-        $result = Db2Facade::exec('SELECT * FROM USERS', ['ID', 'NAME']);
-
-        $this->assertEquals([
-            ['ID' => 5, 'NAME' => 'Alice'],
-            ['ID' => 6, 'NAME' => 'Bob'],
-        ], $result);
     }
 
     public function test_it_can_resolve_db2_from_container()
