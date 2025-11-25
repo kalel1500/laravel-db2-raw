@@ -10,10 +10,6 @@ use Thehouseofel\DB2Raw\Drivers\RealDb2Driver;
 
 class Db2ServiceProvider extends ServiceProvider
 {
-    public array $singletons = [
-        Db2Driver::class => RealDb2Driver::class,
-    ];
-
     public function register(): void
     {
         if (! defined('DB2RAW_PATH')) {
@@ -23,6 +19,9 @@ class Db2ServiceProvider extends ServiceProvider
         if (! $this->app->configurationIsCached()) {
             $this->mergeConfigFrom(DB2RAW_PATH . '/config/db2_raw.php', 'db2_raw');
         }
+
+        // binder del driver real
+        $this->app->singleton(Db2Driver::class, RealDb2Driver::class);
 
         // Binder del manager: inyectamos la config 'db2' de Laravel al manager
         $this->app->singleton(Db2Manager::class, function ($app) {
