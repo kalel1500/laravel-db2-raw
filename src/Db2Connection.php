@@ -15,10 +15,7 @@ class Db2Connection
     {
     }
 
-    /**
-     * Ejecuta una query y devuelve array de filas con las keys indicadas en $fields.
-     */
-    public function exec(string $query, array $fields): array
+    public function exec(string $query): array
     {
         $conn = $this->driver->connect($this->config);
 
@@ -30,11 +27,7 @@ class Db2Connection
         $rows   = [];
 
         while ($row = $this->driver->fetchAssoc($result)) {
-            $clean = [];
-            foreach ($fields as $field) {
-                $clean[$field] = $row[$field];
-            }
-            $rows[] = $clean;
+            $rows[] = $row;
         }
 
         $this->driver->close($conn);

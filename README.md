@@ -59,7 +59,7 @@ To launch a query you can use the Db2 facade:
 ```php
 use Thehouseofel\DB2Raw\Facades\Db2;
 
-Db2::exec($query, $fields)
+Db2::exec($query)
 ```
 
 ## License

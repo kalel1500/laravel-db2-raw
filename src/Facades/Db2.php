@@ -9,7 +9,7 @@ use Thehouseofel\DB2Raw\Db2Manager;
 
 /**
  * @method static \Thehouseofel\DB2Raw\Db2Connection connection(string $name)
- * @method static array exec(string $query, array $fields)
+ * @method static array exec(string $query)
  *
  * @see \Thehouseofel\DB2Raw\Db2Manager
  */
