@@ -27,7 +27,11 @@ class Db2Connection
         $rows   = [];
 
         while ($row = $this->driver->fetchAssoc($result)) {
-            $rows[] = $row;
+            $normalized = [];
+            foreach ($row as $key => $value) {
+                $normalized[strtolower($key)] = $value;
+            }
+            $rows[] = $normalized;
         }
 
         $this->driver->close($conn);
