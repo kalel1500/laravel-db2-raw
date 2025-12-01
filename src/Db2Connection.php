@@ -19,10 +19,6 @@ class Db2Connection
     {
         $conn = $this->driver->connect($this->config);
 
-        if (!$conn) {
-            throw new \RuntimeException("Failed connecting to DB2.");
-        }
-
         $result = $this->driver->exec($conn, $query);
         $rows   = [];
 

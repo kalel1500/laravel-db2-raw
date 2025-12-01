@@ -16,7 +16,11 @@ final class FakeDb2Driver implements Db2Driver
 
     public function connect(Db2Config $config)
     {
-        return $this->connected ? 'fake_conn' : false;
+        if (!$this->connected) {
+            throw new \RuntimeException("Failed connecting to DB2.");
+        }
+
+        return 'fake_conn';
     }
 
     public function exec($connection, string $query)

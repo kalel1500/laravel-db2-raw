@@ -12,7 +12,13 @@ final class RealDb2Driver implements Db2Driver
     public function connect(Db2Config $config)
     {
         // usa el connection string generado por Db2Config
-        return \db2_connect($config->toConnectionString(), '', '');
+        $conn = \db2_connect($config->toConnectionString(), '', '');
+
+        if (!$conn) {
+            throw new \RuntimeException("Failed connecting to DB2. " . \db2_conn_errormsg());
+        }
+
+        return $conn;
     }
 
     public function exec($connection, string $query)

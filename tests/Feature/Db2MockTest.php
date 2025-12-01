@@ -49,7 +49,7 @@ class Db2MockTest extends TestCase
     {
         // 1️⃣ Mock del driver que simula fallo al conectar
         $driver = \Mockery::mock(Db2Driver::class);
-        $driver->shouldReceive('connect')->once()->andReturn(false);
+        $driver->shouldReceive('connect')->once()->andThrow(\RuntimeException::class);
 
         // 2️⃣ Config dummy
         $config = new Db2Config('h', 'p', 'd', 'u', 'pw');
@@ -60,6 +60,6 @@ class Db2MockTest extends TestCase
         // 4️⃣ Esperamos excepción
         $this->expectException(\RuntimeException::class);
 
-        $db2->exec('SELECT 1', []);
+        $db2->exec('SELECT 1');
     }
 }

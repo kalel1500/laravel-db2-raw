@@ -8,6 +8,9 @@ interface Db2Driver
 {
     /**
      * Conecta usando la configuración (Devuelve handle / resource / falso).
+     *
+     * @param Db2Config $config
+     * @return resource
      */
     public function connect(Db2Config $config);
 
