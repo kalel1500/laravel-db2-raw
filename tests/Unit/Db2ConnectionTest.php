@@ -22,12 +22,12 @@ class Db2ConnectionTest extends TestCase
         $config = new Db2Config('h', 'p', 'db', 'u', 'pw');
         $conn   = new Db2Connection($config, $driver);
 
-        $out = $conn->exec("SELECT * FROM USERS", ['ID', 'NAME']);
+        $out = $conn->exec("SELECT * FROM USERS");
 
         $this->assertCount(2, $out);
         $this->assertEquals([
-            ['ID' => 1, 'NAME' => 'John Doe'],
-            ['ID' => 2, 'NAME' => 'Jane Smith'],
+            ['id' => 1, 'name' => 'John Doe'],
+            ['id' => 2, 'name' => 'Jane Smith'],
         ], $out);
 
         // opcional: comprobar que exec fue llamado con la query

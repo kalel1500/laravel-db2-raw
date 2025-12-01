@@ -33,13 +33,13 @@ class Db2MockTest extends TestCase
         $db2 = new Db2Connection($config, $driver);
 
         // 5️⃣ Ejecutamos la consulta
-        $out = $db2->exec('q', ['ID', 'NAME']);
+        $out = $db2->exec('q');
 
         // 6️⃣ Comprobamos el resultado
         $this->assertCount(2, $out);
         $this->assertEquals([
-            ['ID' => 1, 'NAME' => 'A'],
-            ['ID' => 2, 'NAME' => 'B']
+            ['id' => 1, 'name' => 'A'],
+            ['id' => 2, 'name' => 'B']
         ], $out);
 
         \Mockery::close();

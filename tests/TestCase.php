@@ -58,8 +58,8 @@ class TestCase extends Orchestra
     protected static function getFakeDriverData(): array
     {
         return [
-            ['ID' => 5, 'NAME' => 'Alice'],
-            ['ID' => 6, 'NAME' => 'Bob'],
+            ['id' => 5, 'name' => 'Alice'],
+            ['id' => 6, 'name' => 'Bob'],
         ];
     }
 
