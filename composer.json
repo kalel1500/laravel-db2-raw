@@ -1,6 +1,6 @@
 {
     "name": "kalel1500/laravel-db2-raw",
-    "description": "Utilidades para desarrollar en arquitectura hexagonal y DDD en laravel",
+    "description": "laravel-db2-raw is a simple helper to execute raw DB2 queries in Laravel.",
     "keywords": ["laravel", "package", "db2", "raw", "query", "helper"],
     "authors": [
         {
