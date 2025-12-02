@@ -8,7 +8,7 @@
 </p>
 
 
-laravel-db2-raw is a simple helper for execute DB2 rqw querys.
+laravel-db2-raw is a simple helper for execute DB2 raw querys.
 
 ---
 
@@ -26,27 +26,32 @@ composer require kalel1500/laravel-db2-raw
 
 ## Configuration
 
-You can configure the connection to the DB2 database using the following environment variables.
+By default, the package comes with a default connection that you can configure using the `DB2RAW_` environment variables:
 
 ```php
+    
     /*
     |--------------------------------------------------------------------------
-    | DB2 connection
+    | DB2 connections
     |--------------------------------------------------------------------------
     */
 
-    'host' => env('DB2RAW_HOST'),
+    'default' => env('DB2RAW_CONNECTION', 'main'),
 
-    'port' => env('DB2RAW_PORT'),
+    'connections' => [
 
-    'database' => env('DB2RAW_DATABASE'),
+        'main' => [
+            'host' => env('DB2RAW_HOST'),
+            'port' => env('DB2RAW_PORT'),
+            'database' => env('DB2RAW_DATABASE'),
+            'username' => env('DB2RAW_USERNAME'),
+            'password' => env('DB2RAW_PASSWORD'),
+        ]
 
-    'username' => env('DB2RAW_USERNAME'),
-
-    'password' => env('DB2RAW_PASSWORD'),
+    ]
 ```
 
-You can also publish the configuration file with the following command
+You can also publish the configuration file (`config/db2_raw.php`) with the following command
 
 ```bash
 php artisan vendor:publish --tag="db2raw"
@@ -60,6 +65,14 @@ To launch a query you can use the Db2 facade:
 use Thehouseofel\DB2Raw\Facades\Db2;
 
 Db2::exec($query)
+```
+
+You can also specify which connection to use:
+
+```php
+use Thehouseofel\DB2Raw\Facades\Db2;
+
+Db2::connection('admin')->exec($query)
 ```
 
 ## License
