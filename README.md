@@ -8,7 +8,9 @@
 </p>
 
 
-laravel-db2-raw is a simple helper for execute DB2 raw querys.
+laravel-db2-raw is a simple helper to execute raw DB2 queries in Laravel.
+
+This package provides a thin wrapper around the native `ibm_db2` functions (`db2_connect`, `db2_exec`, `db2_fetch_assoc`, `db2_close`) to make it easier to run raw DB2 SQL queries in Laravel without using Eloquent.
 
 ---
 
@@ -18,6 +20,15 @@ laravel-db2-raw is a simple helper for execute DB2 raw querys.
 
 ## Installation
 
+### Requirements
+
+* PHP >= 8.2
+* `ext-json`
+* `ext-ibm_db2`
+* Laravel >= 12.x
+
+### Installation
+
 Install laravel-db2-raw in your Laravel app with Composer:
 
 ```bash
@@ -26,7 +37,16 @@ composer require kalel1500/laravel-db2-raw
 
 ## Configuration
 
-By default, the package comes with a default connection that you can configure using the `DB2RAW_` environment variables:
+The following environment variables are used by the default connection:
+
+- `DB2RAW_CONNECTION`: Default logical connection name (e.g. `main`).
+- `DB2RAW_HOST`: DB2 server hostname or IP.
+- `DB2RAW_PORT`: DB2 server port.
+- `DB2RAW_DATABASE`: DB2 database name.
+- `DB2RAW_USERNAME`: Username used to connect.
+- `DB2RAW_PASSWORD`: Password used to connect.
+
+This is the default configuration file (`config/db2_raw.php`):
 
 ```php
     
@@ -59,6 +79,8 @@ php artisan vendor:publish --tag="db2raw"
 
 ## Usage
 
+### Basic
+
 To launch a query you can use the Db2 facade:
 
 ```php
@@ -67,7 +89,31 @@ use Thehouseofel\DB2Raw\Facades\Db2;
 Db2::exec($query)
 ```
 
-You can also specify which connection to use:
+The `exec` method receives the full SQL string and returns an array of associative arrays. Column names are normalized to lowercase. Currently, parameter binding (e.g. using `?`) is not supported: you must build the full SQL statement yourself.
+
+Be careful when building SQL strings with user input to avoid SQL injection vulnerabilities.
+
+### Defining additional connections
+
+You can also define additional connections in the configuration file:
+
+```php
+    
+    'connections' => [
+        //...
+
+        'admin' => [
+            'host' => env('DB2RAW_ADMIN_HOST'),
+            'port' => env('DB2RAW_ADMIN_PORT'),
+            'database' => env('DB2RAW_ADMIN_DATABASE'),
+            'username' => env('DB2RAW_ADMIN_USERNAME'),
+            'password' => env('DB2RAW_ADMIN_PASSWORD'),
+        ]
+
+    ]
+```
+
+And before executing the query you can select which connection to use:
 
 ```php
 use Thehouseofel\DB2Raw\Facades\Db2;
@@ -77,4 +123,4 @@ Db2::connection('admin')->exec($query)
 
 ## License
 
-Kalion is open-sourced software licensed under the [GNU General Public License v3.0](LICENSE).
+laravel-db2-raw is open-sourced software licensed under the [GNU General Public License v3.0](LICENSE).
