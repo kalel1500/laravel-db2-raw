@@ -2,6 +2,6 @@
 
 ## [Unreleased](https://github.com/kalel1500/kalion/compare/v0.1.0-beta.0...master)
 
-## v0.1.0-beta.0 - 2025-11-13
+## v0.1.0-beta.0 - 2025-12-02
 
 Primera versión del paquete
