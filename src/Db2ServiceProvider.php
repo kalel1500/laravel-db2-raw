@@ -35,7 +35,7 @@ class Db2ServiceProvider extends ServiceProvider
         // kalion.php
         $this->publishes([
             DB2RAW_PATH . '/config/db2_raw.php' => config_path('db2_raw.php'),
-        ], 'db2raw-config');
+        ], 'db2raw');
 
     }
 }
